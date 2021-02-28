@@ -3,7 +3,7 @@ import axios from "../api/axios";
 import "./Row.css";
 const base_url = "https://image.tmdb.org/t/p/original/";
 
-const Row = ({ title, fetchURL }) => {
+const Row = ({ title, fetchURL, isLargeRow }) => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -28,8 +28,11 @@ const Row = ({ title, fetchURL }) => {
             <img
               /* each img must have an identity so that when one image changes react can identify the change and simply update faster */
               key={movie.id}
-              className="row__poster"
-              src={`${base_url}${movie.poster_path}`}
+              /* every item will get a row__poster clss name but it its isLargeRow we will add another class name besides it  */
+              className={`row__poster ${isLargeRow && "row__posterLarge"}`}
+              src={`${base_url}${
+                isLargeRow ? movie.poster_path : movie.backdrop_path
+              }`}
               alt={movie.name}
             />
           ))}
